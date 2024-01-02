@@ -25,17 +25,6 @@ async def add_book(book: Book):
     cur.close()
     return {"message": "Book added successfully"}
 
-# Get a specific book
-@router.get("/books/{book_id}")
-async def get_book(book_id: int):
-    cur = db_conn()
-    cur.execute("SELECT * FROM books WHERE id = %s", (book_id,))
-    book = cur.fetchone()
-    if book:
-        return book
-    cur.close()  # Close the cursor after the operation
-    raise HTTPException(status_code=404, detail="Book not found")
-
 # Update book information
 @router.put("/books/{book_id}")
 async def update_book(book_id: int, book: Book):
